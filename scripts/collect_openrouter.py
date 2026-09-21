@@ -410,6 +410,9 @@ async def collect_jobs(
                         parsed = empty_parsed("request_error", result.get("error", ""), is_refusal=False)
                     result["parsed"] = parsed
 
+                elif skip_gemini_parse:
+                    result["parsed"] = build_free_text_fallback(result)
+
                 # Incremental flush per result
                 if inc_file:
                     inc_file.write(json.dumps({
